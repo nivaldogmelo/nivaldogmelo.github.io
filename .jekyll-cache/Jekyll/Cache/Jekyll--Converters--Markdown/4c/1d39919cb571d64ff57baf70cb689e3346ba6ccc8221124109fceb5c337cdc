@@ -1,0 +1,158 @@
+I"�:<h3 id="building-a-simple-port-scanner-with-go">Building a Simple Port-Scanner with Go</h3>
+
+<p>These days i wanted to make a new project with go, so i went to the <a href="https://github.com/thinkbreak/programming-challenges">programming challenges</a> page and searched for something, the port scanner caught my attention, so i decided to went for it.</p>
+
+<hr />
+
+<h3 id="initial-version">Initial Version</h3>
+
+<p>So first we’ll define a function called <code class="language-plaintext highlighter-rouge">PortScan</code> which will accept a <code class="language-plaintext highlighter-rouge">server</code> parameter that will be the server which we’ll scan for it and return a list with the available ports. A port number is a 16-bit unsigned integer, thus ranging from 0 to 65535, but 0 is reserved and can’t be used, so we know the number of ports that we’ve to scan. Also we’ve to think about how we’re gonna check if the port is available, for this we can use the <code class="language-plaintext highlighter-rouge">net</code> package, he provides us the <code class="language-plaintext highlighter-rouge">Dial</code> function, which we can use to test the connection, but a better one would be the <code class="language-plaintext highlighter-rouge">DialTimeout</code> because it gives us the possibility to set a timeout to the connection. So let’s define our <code class="language-plaintext highlighter-rouge">PortScan()</code></p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">PortScan</span><span class="p">(</span><span class="n">server</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+
+        <span class="k">var</span> <span class="n">available</span> <span class="p">[]</span><span class="kt">int</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="m">65535</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>  
+                <span class="n">ip</span> <span class="o">:=</span> <span class="n">server</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">strconv</span><span class="o">.</span><span class="n">Itoa</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+                <span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">net</span><span class="o">.</span><span class="n">DialTimeout</span><span class="p">(</span><span class="s">"tcp"</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="m">300</span><span class="p">)</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>  
+                <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>  
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+                        <span class="n">available</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">available</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>  
+                <span class="p">}</span>  
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">available</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>For this code to work we have to import the following packages:</p>
+
+<p><code class="language-plaintext highlighter-rouge">net</code>: Package for the <code class="language-plaintext highlighter-rouge">DialTimeout</code> function</p>
+
+<p><code class="language-plaintext highlighter-rouge">strconv</code>: To convert integers to strings and build our server variable</p>
+
+<p><code class="language-plaintext highlighter-rouge">time</code>: To create a *time.Second parameter</p>
+
+<p><code class="language-plaintext highlighter-rouge">os</code>: To get arguments from the command line (we’ll see why in a minute)</p>
+
+<p><code class="language-plaintext highlighter-rouge">fmt</code>: To print results to the command line</p>
+
+<p>Now for our main function</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Cheking for available ports..."</span><span class="p">)</span>  
+        <span class="n">ports</span> <span class="o">:=</span> <span class="n">PortScan</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">Args</span><span class="p">[</span><span class="m">1</span><span class="p">])</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Ports available: "</span> <span class="p">,</span><span class="n">ports</span><span class="p">)</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now that we have our program, we want to build it, to use you can just run with <code class="language-plaintext highlighter-rouge">go run main.go &lt;server&gt;</code> where server is the ip address which you’ll want to check. Let’s use <code class="language-plaintext highlighter-rouge">time</code> command to check for the time it takes to run, first at my localhost:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─[nivaldogmelo@homerus] - <span class="o">[</span>/port-scanner]
+└─[<span class="nv">$]</span> <span class="nb">time </span>go run main.go 127.0.0.1
+Checking <span class="k">for </span>available ports...
+Ports available:  <span class="o">[</span>22 18171 41949 57621]
+
+real    3.52s
+user    1.63s
+sys     2.56s
+</code></pre></div></div>
+
+<p>Now let’s run the same function at a remote server:-</p>
+
+<p>Note that it took a reasonable time, that’s because we check one port at a time, so let’s try to check for multiple ports at the same time</p>
+
+<hr />
+
+<h3 id="using-goroutines">Using Goroutines</h3>
+
+<p>To check at multiple ports at the same time we can use <em>go routines</em>, which are similar to <em>threads</em> in languages like Java. If you don’t know what a routine is i recommend reading the <a href="https://golangbot.com/learn-golang-series/">Golang Bot</a> tutorial (sections 20–23) to have an idea about what we’re gonna treat.</p>
+
+<p>The first thing we’re gonna do is import the <code class="language-plaintext highlighter-rouge">sync</code> package to deal with the goroutines. Now we’re gonna do some changes at the structure of the code. First we’re gonna make the <code class="language-plaintext highlighter-rouge">available</code> variable a global one, because it will create be manipulated by multiple routines. Second it’s to create a struct to define a job that will be executed</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="n">Job</span> <span class="k">struct</span> <span class="p">{</span>
+        <span class="n">server</span> <span class="kt">string</span>
+        <span class="n">port</span>   <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="k">var</span> <span class="n">available</span> <span class="p">[]</span><span class="kt">int</span>
+<span class="k">var</span> <span class="n">jobs</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">Job</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">jobs</code> variable keeps a buffered channel, which is a channel that will store a buffer of jobs to be executed, we defined the channel to have a length of 10, which means it can hold a maximum of 10 jobs at the same time, any other job will be blocked until some one of the jobs is terminated.</p>
+
+<p>Now we’re gonna define our createWorkerPool(), which will create our workers to execute the job. Basically it’s here where we define how many concurrent jobs we’ll run at the same time. To initiate a new goroutine we just need to execute our function with a <code class="language-plaintext highlighter-rouge">go</code> preceding it. We use the <code class="language-plaintext highlighter-rouge">wg.Add(1)</code> to add a new routine to execute our jobs. At the end the <code class="language-plaintext highlighter-rouge">wg.Wait()</code> is required to our main routine to wait for the subsequent routines to be completed before moving to the next step. The <code class="language-plaintext highlighter-rouge">go worker(&amp;wg)</code> needs to use a pointer so that way it will use the same <code class="language-plaintext highlighter-rouge">WaitGroup</code> create by the function, otherwise would create a new one and the tasks would be executed at another goroutines and our original wg group of routines would never be finished</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">createWorkerPool</span><span class="p">(</span><span class="n">noOfWorkers</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="n">wg</span> <span class="n">sync</span><span class="o">.</span><span class="n">WaitGroup</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">noOfWorkers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">wg</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+                <span class="k">go</span> <span class="n">worker</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wg</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">wg</span><span class="o">.</span><span class="n">Wait</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now we need to create a <code class="language-plaintext highlighter-rouge">worker()</code> to execute our job.</p>
+
+<p>func worker(wg *sync.WaitGroup) {<br />
+        for job := range jobs{<br />
+                ip := job.server + “:” + strconv.Itoa(job.port)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            _, err := net.DialTimeout("tcp", ip,                                       time.Duration(300)*time.Millisecond)  
+            if err != nil {  
+            } else {  
+                    available = append(available, job.port)  
+            }                  
+    }  
+    wg.Done()   }
+</code></pre></div></div>
+
+<p>Now we handle the ip assembly in the worker function, with parameters that we’ll recevei from the <code class="language-plaintext highlighter-rouge">jobs</code> buffer, composed by variables with the <code class="language-plaintext highlighter-rouge">Job</code> struct type, composed by a server and a port. The net.DialTimeout will be executed as in our previous <code class="language-plaintext highlighter-rouge">PortScan()</code> and to finish the function we need to pass a <code class="language-plaintext highlighter-rouge">wg.Done()</code> , indicating the goroutine that the task is completed.</p>
+
+<p>As we introduced these changes, we’ll have to change our original <code class="language-plaintext highlighter-rouge">PortScan()</code> . Now the function will be called with an additional parameter, a channel which will be written once all the jobs are executed. For each port we’ll build a <code class="language-plaintext highlighter-rouge">Job</code> type variable and send it to our jobs list. At the end we’ll close the jobs channel since all jobs have been assigned and no other job will be written to the channel. At the end we pass the <code class="language-plaintext highlighter-rouge">true</code> value to the <code class="language-plaintext highlighter-rouge">done</code> channel, to indicate we’ve finished the execution of all our goroutines.</p>
+
+<p>func PortScan(done chan bool, server string) {<br />
+        for i := 1; i &lt;= 65535; i++ {<br />
+                job := Job{server, i}<br />
+                jobs &lt;- job<br />
+        }<br />
+        close(jobs)<br />
+        done &lt;- true<br />
+}</p>
+
+<p>To end our implementation, we make the needed change at our <code class="language-plaintext highlighter-rouge">main()</code></p>
+
+<p>func main() {<br />
+        fmt.Println(“Cheking for available ports…”)<br />
+        done := make(chan bool)<br />
+        go PortScan(done, os.Args[1])<br />
+        noOfWorkers := 10<br />
+        createWorkerPool(noOfWorkers)<br />
+        &lt;-done</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    fmt.Println("Ports available: " , available)
+</code></pre></div></div>
+
+<p>}</p>
+
+<p>First we create our <code class="language-plaintext highlighter-rouge">done</code> channel, then we create a goroutine to run our <code class="language-plaintext highlighter-rouge">PortScan</code> getting the parameter that we’ll pass at the command line. Then we set a number of workers and create a worker pool of this size, for the sake of this demo we’ll go with 10000 workers. Then we wait for the <code class="language-plaintext highlighter-rouge">done</code> channel to return a <code class="language-plaintext highlighter-rouge">true</code> value. So we only need to need to print the available ports.</p>
+
+<p>Ok so we’ve done a few changes on our code, but what have we achieved with this, so let’s use our <code class="language-plaintext highlighter-rouge">time</code> command to measure the performance:</p>
+
+<p>─[nivaldogmelo@homerus] - [/port-scanner]<br />
+└─[$] time go run port-scanner-no-goroutines.go 127.0.0.1<br />
+Checking for available ports…<br />
+Ports available:  [22 18171 50421 57621]</p>
+
+<p>real    3.51s<br />
+user    1.67s<br />
+sys     2.55s</p>
+
+<p>Doesn’t change too much, now let’s see on a remote server</p>
+:ET
