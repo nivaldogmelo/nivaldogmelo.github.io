@@ -26,4 +26,5 @@ titles:
 key: page-about
 ---
 
+## $ whoami
 Hello! I'm Nivaldo Melo, a SRE|DevOps Engineer with a passion for math, soccer and the digital world
