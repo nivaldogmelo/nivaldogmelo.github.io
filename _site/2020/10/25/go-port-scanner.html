@@ -291,14 +291,18 @@
     <meta itemprop="keywords" content="GO"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><h3 id="building-a-simple-port-scanner-with-go">Building a Simple Port-Scanner with Go</h3>
+<div class="article__content" itemprop="articleBody"><h2 id="building-a-simple-port-scanner-with-go">Building a Simple Port-Scanner with Go</h2>
 
 <p>These days i wanted to make a new project with go, so i went to the <a href="https://github.com/thinkbreak/programming-challenges">programming challenges</a> page and searched for something, the port
 scanner caught my attention, so i decided to went for it.</p>
 
 <hr />
 
-<h3 id="initial-version">Initial Version</h3>
+<h2 id="disclaimer">Disclaimer</h2>
+
+<p>What we’re gonna use build can’t be used against servers which you don’t have a permission to run. Read <a href="https://nmap.org/book/legal-issues.html" title="nmap legal issues">this</a> to understand more</p>
+
+<h2 id="initial-version">Initial Version</h2>
 
 <p>So first we’ll define a function called <code class="language-plaintext highlighter-rouge">PortScan</code> which will accept a <code class="language-plaintext highlighter-rouge">server</code> parameter that will be the server which we’ll scan for it and return a list with the available ports. 
 A port number is a 16-bit unsigned integer, thus ranging from 0 to 65535, but 0 is reserved and can’t be used, so we know the number of ports that we’ve to scan. Also we’ve to think 
@@ -365,7 +369,7 @@ sys     12.14s
 
 <hr />
 
-<h3 id="using-goroutines">Using Goroutines</h3>
+<h2 id="using-goroutines">Using Goroutines</h2>
 
 <p>To increase the speed of our test we could check at multiple ports at the same time. For this we can use <em>go routines</em>, which are similar to <em>threads</em> in languages like Java. If you don’t
 know what a routine is i recommend reading the <a href="https://golangbot.com/learn-golang-series/">Golang Bot</a> tutorial (sections 20–23) to have an idea about what we’re gonna handle.
@@ -464,7 +468,7 @@ sys     5.21s
 
 <p>Now we’ve reached a smaller time</p>
 
-<h3 id="final-considerations">Final considerations</h3>
+<h2 id="final-considerations">Final considerations</h2>
 
 <p>When hiting a remote server be careful with the number of workers used, because some routers limit the number of concurrent threads, so some ports will be skipped</p>
 
@@ -480,7 +484,7 @@ sys     5.21s
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="next"><span>NEXT</span><a href="/2020/10/26/No-Title.html">Creating a Development Flow</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="next"><span>NEXT</span><a href="/2020/10/25/go-port-scanner.md.tmp">Building a Simple Port Scanner with GO</a></div></div></div>
 
 </div>
 

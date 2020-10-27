@@ -3,14 +3,18 @@ title: Building a Simple Port Scanner with GO
 tags: GO
 ---
 
-### Building a Simple Port-Scanner with Go
+## Building a Simple Port-Scanner with Go
 
 These days i wanted to make a new project with go, so i went to the [programming challenges](https://github.com/thinkbreak/programming-challenges) page and searched for something, the port
 scanner caught my attention, so i decided to went for it.
 
 ----------
 
-### Initial Version
+## Disclaimer
+
+What we're gonna use build can't be used against servers which you don't have a permission to run. Read [this](https://nmap.org/book/legal-issues.html "nmap legal issues") to understand more
+
+## Initial Version
 
 So first we’ll define a function called `PortScan` which will accept a `server` parameter that will be the server which we’ll scan for it and return a list with the available ports. 
 A port number is a 16-bit unsigned integer, thus ranging from 0 to 65535, but 0 is reserved and can’t be used, so we know the number of ports that we’ve to scan. Also we’ve to think 
@@ -80,7 +84,7 @@ Note that it took a reasonable time, that’s because we check one port at a tim
 
 ----------
 
-### Using Goroutines
+## Using Goroutines
 
 To increase the speed of our test we could check at multiple ports at the same time. For this we can use _go routines_, which are similar to _threads_ in languages like Java. If you don’t
 know what a routine is i recommend reading the [Golang Bot](https://golangbot.com/learn-golang-series/) tutorial (sections 20–23) to have an idea about what we’re gonna handle.
@@ -185,7 +189,7 @@ sys     5.21s
 
 Now we've reached a smaller time
 
-### Final considerations
+## Final considerations
 
 When hiting a remote server be careful with the number of workers used, because some routers limit the number of concurrent threads, so some ports will be skipped
 
