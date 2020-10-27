@@ -1,5 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2020-10-25T23:28:41+00:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Nivaldo Melo</title><subtitle>Nivaldo Melo personal website
-</subtitle><author><name>Nivaldo Melo</name></author><entry><title type="html">Building a Simple Port Scanner with GO</title><link href="http://0.0.0.0:4000/2020/10/25/go-port-scanner.html" rel="alternate" type="text/html" title="Building a Simple Port Scanner with GO" /><published>2020-10-25T00:00:00+00:00</published><updated>2020-10-25T00:00:00+00:00</updated><id>http://0.0.0.0:4000/2020/10/25/go-port-scanner</id><content type="html" xml:base="http://0.0.0.0:4000/2020/10/25/go-port-scanner.html">&lt;h3 id=&quot;building-a-simple-port-scanner-with-go&quot;&gt;Building a Simple Port-Scanner with Go&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2020-10-27T04:57:32+00:00</updated><id>http://0.0.0.0:4000/feed.xml</id><title type="html">Nivaldo Melo</title><subtitle>Nivaldo Melo personal website
+</subtitle><author><name>Nivaldo Melo</name></author><entry><title type="html">Creating a Development Flow</title><link href="http://0.0.0.0:4000/2020/10/26/No-Title.html" rel="alternate" type="text/html" title="Creating a Development Flow" /><published>2020-10-26T00:00:00+00:00</published><updated>2020-10-26T00:00:00+00:00</updated><id>http://0.0.0.0:4000/2020/10/26/No-Title</id><content type="html" xml:base="http://0.0.0.0:4000/2020/10/26/No-Title.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;When you’re creating a new project it’s important to set a few rules to y
+We all know how it’s important to set a development flow&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-workspace&quot;&gt;Setup Workspace&lt;/h2&gt;
+
+&lt;p&gt;We are gonna use Github to setup our project repository, first we need to create a new repository, you can
+&lt;a href=&quot;https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/create-a-repo&quot; title=&quot;create a repository&quot;&gt;create a repository&lt;/a&gt;.
+then you can clone the repo using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone&lt;/code&gt; command, you have two options:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Clone using HTTPS: 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone https://github.com/&amp;lt;your-username&amp;gt;/&amp;lt;repo-name&amp;gt;.git&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Clone using SSH:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone git@github.com:&amp;lt;your-username&amp;gt;/&amp;lt;repo-name&amp;gt;.git&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Obs: If you wanna clone using ssh, you need to setup a ssh-key for github, 
+&lt;a href=&quot;https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/connecting-to-github-with-ssh&quot; title=&quot;setup ssh-key for github&quot;&gt;here’s&lt;/a&gt;
+how you can make it&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-development-environment&quot;&gt;Setup Development Environment&lt;/h2&gt;
+
+&lt;p&gt;We’re gonne use NodeJS for this tutorial, you can can install it &lt;a href=&quot;https://nodejs.org/en/download/package-manager/&quot; title=&quot;NodeJS install instructions&quot;&gt;here&lt;/a&gt;
+This tutorial is gonna use the nodeJs version v15.0.1 and the npm version 7.0.3. Now that you have the both node and npm installed we can setup the project&lt;/p&gt;
+
+&lt;h3 id=&quot;create-node-project&quot;&gt;Create node project&lt;/h3&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;┌─[nivaldogmelo@yggdrasil] - &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;/development-flow-example]
+└─[&lt;span class=&quot;nv&quot;&gt;$]&lt;/span&gt; npm init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you’ll have answer a few questions, like the app name, the version and others stuff (You can fill as you like, just leave the entrypoint as index.js)&lt;/p&gt;
+
+&lt;h3 id=&quot;install-express&quot;&gt;Install Express&lt;/h3&gt;
+
+&lt;p&gt;We’re using &lt;a href=&quot;https://expressjs.com/&quot; title=&quot;ExpressJS site&quot;&gt;express&lt;/a&gt; as it is a simple and powerfull web framework for Node&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;┌─[nivaldogmelo@yggdrasil] - &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;/development-flow-example]
+└─[&lt;span class=&quot;nv&quot;&gt;$]&lt;/span&gt; npm &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;express &lt;span class=&quot;nt&quot;&gt;--save&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With this command you’ll get express downloaded into your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/node_modules&lt;/code&gt; folder&lt;/p&gt;
+
+&lt;h3 id=&quot;create-hello-world-app&quot;&gt;Create hello world app&lt;/h3&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;port&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3000&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hello World!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Example app listening at http://localhost:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Nivaldo Melo</name></author><category term="dev," /><category term="javascript," /><category term="nodejs" /><summary type="html">Introduction When you’re creating a new project it’s important to set a few rules to y We all know how it’s important to set a development flow Setup Workspace We are gonna use Github to setup our project repository, first we need to create a new repository, you can create a repository. then you can clone the repo using the git clone command, you have two options: Clone using HTTPS: git clone https://github.com/&amp;lt;your-username&amp;gt;/&amp;lt;repo-name&amp;gt;.git Clone using SSH: git clone git@github.com:&amp;lt;your-username&amp;gt;/&amp;lt;repo-name&amp;gt;.git Obs: If you wanna clone using ssh, you need to setup a ssh-key for github, here’s how you can make it Setup Development Environment We’re gonne use NodeJS for this tutorial, you can can install it here This tutorial is gonna use the nodeJs version v15.0.1 and the npm version 7.0.3. Now that you have the both node and npm installed we can setup the project Create node project ┌─[nivaldogmelo@yggdrasil] - [/development-flow-example] └─[$] npm init Then you’ll have answer a few questions, like the app name, the version and others stuff (You can fill as you like, just leave the entrypoint as index.js) Install Express We’re using express as it is a simple and powerfull web framework for Node ┌─[nivaldogmelo@yggdrasil] - [/development-flow-example] └─[$] npm install express --save With this command you’ll get express downloaded into your /node_modules folder Create hello world app const express = require('express') const app = express() const port = 3000 app.get('/', (req, res) =&amp;gt; { res.send('Hello World!') }) app.listen(port, () =&amp;gt; { console.log(`Example app listening at http://localhost:${port}`) })</summary></entry><entry><title type="html">Building a Simple Port Scanner with GO</title><link href="http://0.0.0.0:4000/2020/10/25/go-port-scanner.html" rel="alternate" type="text/html" title="Building a Simple Port Scanner with GO" /><published>2020-10-25T00:00:00+00:00</published><updated>2020-10-25T00:00:00+00:00</updated><id>http://0.0.0.0:4000/2020/10/25/go-port-scanner</id><content type="html" xml:base="http://0.0.0.0:4000/2020/10/25/go-port-scanner.html">&lt;h3 id=&quot;building-a-simple-port-scanner-with-go&quot;&gt;Building a Simple Port-Scanner with Go&lt;/h3&gt;
 
 &lt;p&gt;These days i wanted to make a new project with go, so i went to the &lt;a href=&quot;https://github.com/thinkbreak/programming-challenges&quot;&gt;programming challenges&lt;/a&gt; page and searched for something, the port
 scanner caught my attention, so i decided to went for it.&lt;/p&gt;
