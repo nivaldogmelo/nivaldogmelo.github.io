@@ -1,1 +1,0 @@
-window.TEXT_SEARCH_DATA={'posts':[{'title':"Building a Simple Port Scanner with GO",'url':"/2020/10/25/go-port-scanner.html"},{'title':"Building a Simple Port Scanner with GO",'url':"/2020/10/25/go-port-scanner.md.tmp"},{'title':"Creating a Development Flow",'url':"/2020/10/26/No-Title.html"},{'title':"Creating a Development Flow",'url':"/2020/10/26/No-Title.md.tmp"}]};
