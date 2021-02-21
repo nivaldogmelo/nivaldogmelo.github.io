@@ -1,6 +1,11 @@
 ---
+# Required front matter
+layout: post # Posts should use the post layout
 title: Building a Simple Port Scanner with GO
-tags: GO
+date: 2020-10-25
+
+# Recommended front matter
+tags: GO 
 ---
 
 ## Building a Simple Port-Scanner with Go
