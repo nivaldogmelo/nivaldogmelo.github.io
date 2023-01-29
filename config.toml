@@ -49,14 +49,20 @@ author = "authors"
 [[params.social]]
 name = "LinkedIn"
 icon = "fa fa-2x fa-linkedin"
-weight = 4
+weight = 2
 url = "https://www.linkedin.com/in/nivaldogmelo/"
 
 [[params.social]]
 name = "Medium"
 icon = "fa fa-2x fa-medium"
-weight = 5
+weight = 3
 url = "https://medium.com/@nivaldogmelo"
+
+[[params.social]]
+name = "RSS"
+icon = "fa fa-rss-square fa-2x"
+weight = 4
+url = "/posts/index.xml"
 
 [languages.en]
 languageName = ":uk:"
