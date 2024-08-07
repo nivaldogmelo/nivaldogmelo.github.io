@@ -6,7 +6,7 @@ description = "Um guia para como estruturar o terraform dentro do seu time"
 tags = [ "golang", "terraform", ]
 +++
 
-## Estruturando seu Terraform
+## Estruturando seu Terraform (Em construção)
 
 Como sabemos o Terraform é uma das ferramentas mais populares quando se trata de IAC declarativa, porém algo que sem pre me deixou um pouco perdido foi como estruturar meus  projetos. Não é difícil acharmos um tutorial de boas práticas de como devemos nomear, porém sempre fiquei um pouco perdido em questão de organização. Devo usar módulos? Workspaces? Até onde devo agregar os recursos em um único arquivo `.tf`?
 
