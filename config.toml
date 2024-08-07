@@ -6,9 +6,6 @@ defaultcontentlanguage = "en"
 
 paginate = 20
 
-pygmentsstyle = "bw"
-pygmentscodefences = true
-pygmentscodefencesguesssyntax = true
 
 
 [params]
@@ -32,6 +29,9 @@ pygmentscodefencesguesssyntax = true
   customCSS = ["css/custom.css"]
   customSCSS = []
   customJS = []
+
+[markup.highlight]
+style = "dracula"
 
 [taxonomies]
 category = "categories"

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  Estruturando seu Terraform · nivaldogmelo
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Nivaldo Melo">
+<meta name="description" content="Um guia para como estruturar o terraform dentro do seu time">
+<meta name="keywords" content="blog,developer,personal">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Estruturando seu Terraform">
+  <meta name="twitter:description" content="Um guia para como estruturar o terraform dentro do seu time">
+
+<meta property="og:url" content="http://localhost:1313/posts/structuring-terraform/">
+  <meta property="og:site_name" content="nivaldogmelo">
+  <meta property="og:title" content="Estruturando seu Terraform">
+  <meta property="og:description" content="Um guia para como estruturar o terraform dentro do seu time">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-08-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-07T00:00:00+00:00">
+    <meta property="article:tag" content="Golang">
+    <meta property="article:tag" content="Terraform">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/structuring-terraform/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.css" media="screen">
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.css" media="screen">
+  
+
+
+
+ 
+  
+    
+    <link rel="stylesheet" href="/css/custom.css" media="screen">
+  
+
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      nivaldogmelo
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+        
+        
+          
+          
+          
+            
+              
+                <li class="navigation-item menu-separator">
+                  <span>|</span>
+                </li>
+                
+              
+              <li class="navigation-item">
+                <a href="/pt-br/posts/structuring-terraform/">🇧🇷</a>
+              </li>
+            
+          
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/structuring-terraform/">
+              Estruturando seu Terraform
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-08-07T00:00:00Z">
+                August 7, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              9-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/golang/">Golang</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/terraform/">Terraform</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="estruturando-seu-terraform">
+  Estruturando seu Terraform
+  <a class="heading-link" href="#estruturando-seu-terraform">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Como sabemos o Terraform é uma das ferramentas mais populares quando se trata de IAC declarativa, porém algo que sem pre me deixou um pouco perdido foi como estruturar meus  projetos. Não é difícil acharmos um tutorial de boas práticas de como devemos nomear, porém sempre fiquei um pouco perdido em questão de organização. Devo usar módulos? Workspaces? Até onde devo agregar os recursos em um único arquivo <code>.tf</code>?</p>
+<p>A partir disso escrevi um modelo de estrutura para o código terraform, que engloba funcionalidades que na minha opinião são essenciais em um projeto. Esse modelo é composto por três pilares:</p>
+<ul>
+<li><strong>Módulos</strong>: Utilizados para agregar serviços que funcionam como uma unidade (Mais detalhes a frente), dessa forma reduziremos a repetição de códigos.</li>
+<li><strong>Testes Unitários</strong>: Para conseguirmos detectar falhas o mais cedo possível no desenvolvimento</li>
+<li><strong>Documentação</strong>: Tentaremos deixa o processo de documentar o mais suave possível de forma que fique fácil para que outras pessoas da empresa consigam adotar os arquivos.</li>
+</ul>
+<p>Vamos começar então explicando o motivo pela escolha desses pilares.</p>
+<hr>
+<h3 id="módulos">
+  Módulos
+  <a class="heading-link" href="#m%c3%b3dulos">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Como muitos já devem saber, um módulo no Terraform é uma forma de agregarmos recursos que são configurado em conjunto com certa frequência, dessa forma conseguimos reaproveitar código com mais facilidade e fazer alterações em massa. Algo importante a ser considerado é que quando escrevendo módulos outras pessoas podem estar dependendo do seu código, por isso é importante levar em consideração antes de realizar uma alteração que possa levar a incompatibilidade, mas temos como contornar isso.</p>
+<h3 id="testes-unitários">
+  Testes Unitários
+  <a class="heading-link" href="#testes-unit%c3%a1rios">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Testes em infraestrutura de certa forma ainda são incomuns por conta do custo que isso pode gerar, porém se bem controlados podem facilitar bastante o desenvolvimento e manutenabilidade do seu código, podemos ter nos testes os cenários mais importantes aos quais os módulo deve cobrir, para evitar que uma alteração nova quebre algo existente. Outra vantagem é que tendo os cenários documentado nos testes não precisamos nos preocupar em realizarmos nós mesmos, o que pode levar a erros.</p>
+<h3 id="documentação">
+  Documentação
+  <a class="heading-link" href="#documenta%c3%a7%c3%a3o">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Por último temos a etapa da documentação, ter uma boa documentação facilita muito a compreensão e a adoção por parte dos times, porém se feita manualmente é muito fácil ter algum exemplo perdido, ou uma variável com valor errado em um readme, levando a falhas na hora que alguém tentar seguir a mesma. Por isso vamos tentar deixar o processo o mais automático possível, de forma que a doc esteja sempre atualizada com os valores no seu projeto.</p>
+<h3 id="onde-queremos-chegar">
+  Onde queremos chegar
+  <a class="heading-link" href="#onde-queremos-chegar">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Por fim segue a estrutura de repositório onde queremos chegar, observe que temos alguns arquivos <code>go</code> pois é a linguagem que vamos utilizar para escrever os testes unitários</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>terraform-modules-structure
+</span></span><span style="display:flex;"><span>├── examples/
+</span></span><span style="display:flex;"><span>├── go.mod
+</span></span><span style="display:flex;"><span>├── go.sum
+</span></span><span style="display:flex;"><span>├── modules/
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>└── test/
+</span></span></code></pre></div><hr>
+<h2 id="escrevendo-o-código">
+  Escrevendo o código
+  <a class="heading-link" href="#escrevendo-o-c%c3%b3digo">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Antes de começar vamos então definir dois tipos de serviços para subirmos, primeiro vamos focar em uma Cloud Function no GCP, em uma cloud Function podemos escolher alguns tipos de fontes para buscar o nosso código, para esse exemplo vamos buscar de um Bucket, então vamos ter a seguinte estrutura:</p>
+<p>()()()()()()()</p>
+<h3 id="inicializando-o-repositório">
+  Inicializando o Repositório
+  <a class="heading-link" href="#inicializando-o-reposit%c3%b3rio">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Essa parte começa bem simples, a princípio só precisamos iniciar um projeto golang, o que pode ser feito da seguinte forma</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ mkdir terraform-modules-structure <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#8be9fd;font-style:italic">cd</span> terraform-modules-structure
+</span></span><span style="display:flex;"><span>❯ go mod init terraform-modules-structure
+</span></span></code></pre></div><p>Observe que nomeei meu projeto como <code>terraform-modules-structure</code>, mas fique livre pra nomear como quiser.</p>
+<h3 id="testes">
+  Testes
+  <a class="heading-link" href="#testes">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Tentando seguir uma boa prática do mundo do desenvolvimento vamos começar pelos testes unitários. Para isso utilizaremos uma ferramenta chamada <a href="https://terratest.gruntwork.io/docs/getting-started/quick-start/"  class="external-link" target="_blank" rel="noopener">Terratest</a> desenvolvida pelo pessoal do Gruntwork. Essa biblioteca possui vários módulos para lidar com diferentes backends (Google, AWS, Kubernetes, etc&hellip;), facilitando a adoção em diferentes projetos.</p>
+<p>Agora vamos escrever nosso primeiro teste, primeiro vamos criar uma pasta para nossos testes e então o arquivo do mesmo, lembrando que em um projeto <code>go</code> testes costumam ter uma nomenclatura <code>*_test.go</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ mkdir -p test/gcp
+</span></span><span style="display:flex;"><span>❯ touch test/gcp/cloud_function_test.go
+</span></span></code></pre></div><p>Pensando agora no nosso serviço vamos analisar os requisitos que temos. Gostaríamos que o terraform que escrevemos tenha um retorno com sucesso, e que sejam criados uma instância de Cloud Function e um bucket.</p>
+<p>Um ponto importante ao executar testes são o nome dos recursos e garantir que o mesmo seja destruído após a rotina. O primeiro ponto para evitar que o mesmo falhe somente por ter um nome repetiddo e o segundo para reduzir os gastos.</p>
+<p>Como essas coisas são gerais em testes, vamos aproveitar para criar o arquivo <code>test/helpers.go</code> que terá as funções auxiliares para que possam ser reaproveitadas em multiplos testes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;math/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/gruntwork-io/terratest/modules/terraform&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Teardown destrói os recursos criados pelo terraform apply, caso ocorra um erro, ele tenta novamente após 5 segundos
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">Teardown</span>(t <span style="color:#ff79c6">*</span>testing.T, terraformOptions <span style="color:#ff79c6">*</span>terraform.Options) {
+</span></span><span style="display:flex;"><span>	_, err <span style="color:#ff79c6">:=</span> terraform.<span style="color:#50fa7b">DestroyE</span>(t, terraformOptions)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		time.<span style="color:#50fa7b">Sleep</span>(<span style="color:#bd93f9">5</span> <span style="color:#ff79c6">*</span> time.Second)
+</span></span><span style="display:flex;"><span>		_, err = terraform.<span style="color:#50fa7b">DestroyE</span>(t, terraformOptions)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// GenerateHash retorna uma string aleatória dado um tamanho.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">GenerateHash</span>(size <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>	letterRunes <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd;font-style:italic">rune</span>(<span style="color:#f1fa8c">&#34;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#34;</span>)
+</span></span><span style="display:flex;"><span>	s <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>([]<span style="color:#8be9fd">rune</span>, size)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> s {
+</span></span><span style="display:flex;"><span>		s[i] = letterRunes[rand.<span style="color:#50fa7b">Intn</span>(<span style="color:#8be9fd;font-style:italic">len</span>(letterRunes))]
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">string</span>(s)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Agora o que precisamos fazer é escrever o teste de fato, para isso crie o arquivo <code>test/gcp/cloud_fucntion_test.go</code> e preencha com o seguinte</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> gcp_test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Observe que aqui é um import do meu projeto, o seu pode variar
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#f1fa8c">&#34;github.com/nivaldogmelo/terraform-modules-structure/test&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/gruntwork-io/terratest/modules/gcp&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/gruntwork-io/terratest/modules/terraform&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/stretchr/testify/assert&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestCloudFunction</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// t.Parallel() is used to run the tests in parallel
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>	projectId <span style="color:#ff79c6">:=</span> gcp.<span style="color:#50fa7b">GetGoogleProjectIDFromEnvVar</span>(t)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	testHash <span style="color:#ff79c6">:=</span> test.<span style="color:#50fa7b">GenerateHash</span>(<span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	expectedFunctionName <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;test-function&#34;</span> <span style="color:#ff79c6">+</span> testHash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Aqui definimos as configurações do Terraform, como o diretório onde estão os arquivos de configuração, variáveis e se o terratest deve realizar retry em caso de erro.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	terraformOptions <span style="color:#ff79c6">:=</span> terraform.<span style="color:#50fa7b">WithDefaultRetryableErrors</span>(t, <span style="color:#ff79c6">&amp;</span>terraform.Options{
+</span></span><span style="display:flex;"><span>		TerraformDir: <span style="color:#f1fa8c">&#34;../../examples/gcp/cloud-function&#34;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		VarFiles: []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;inputs/varfiles.tfvars&#34;</span>},
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#6272a4">// Aqui definimos as variáveis que serão passadas para o Terraform.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		Vars: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd;font-style:italic">interface</span>{}{
+</span></span><span style="display:flex;"><span>			<span style="color:#f1fa8c">&#34;function_name&#34;</span>: expectedFunctionName,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		EnvVars: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#f1fa8c">&#34;GOOGLE_CLOUD_PROJECT&#34;</span>: projectId,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Com o defer nós adiamos o uso do &#34;terraform destroy&#34; até o final do teste, assim garantimos que o ambiente será destruído mesmo que o teste falhe.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">defer</span> test.<span style="color:#50fa7b">Teardown</span>(t, terraformOptions)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Aqui rodamos o comando &#34;terraform init&#34; e &#34;terraform apply&#34; para criar a infraestrutura.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	terraform.<span style="color:#50fa7b">InitAndApply</span>(t, terraformOptions)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Aqui verificamos se o bucket foi criado com sucesso.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	gcp.<span style="color:#50fa7b">AssertStorageBucketExists</span>(t, expectedFunctionName)
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// output := terraform.Output(t, terraformOptions, &#34;hello_world&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#6272a4">// assert.Equal(t, &#34;Hello, World!&#34;, output)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>Agora vamos executar os testes, para isso use</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ go mod tidy
+</span></span><span style="display:flex;"><span>❯ go <span style="color:#8be9fd;font-style:italic">test</span> ./...
+</span></span></code></pre></div><p>Observe que o mesmo vai falhar, pois não configuramos nem o projeto nem os arquivos terraform. Agora vamos trabalhar nisso</p>
+<h3 id="exemplos">
+  Exemplos
+  <a class="heading-link" href="#exemplos">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Eu diria que aqui é a parte mais importante do projeto, nessa parte vamos definir os exemplos de uso do módulo, pensando em como os usuários finais vão interagir com nossos módulos. Por isso é importante que os exemplos sejam claros, entreguem algo prático e sejam estáveis, pois caso contrário a adoção do projeto pode não ser simples.</p>
+<p>Vamos pensar novamente no nosso exemplo, porém do ponto de vista de quem vai consumir o módulo. Precisamos criar uma Cloud Function no projeto GCP. A partir disso pensamos em quais parâmetros fazem sentido o usuário ter controle e quais não fazem tanta diferença.</p>
+<p>Olhando o seguinte <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions2_function#example-usage---cloudfunctions2-basic"  class="external-link" target="_blank" rel="noopener">exemplo</a> vamos começar proponto que o usuário possa ter controle nos seguintes pontos parâmetros:</p>
+<ul>
+<li>nome da funcão</li>
+<li>região</li>
+<li>descrição</li>
+<li>runtime</li>
+<li>entry_point</li>
+<li>max_instance</li>
+<li>memória</li>
+<li>timeout</li>
+</ul>
+<p>O restante pode ser definido pelo próprio módulo, visto que não afeta tanto na entrega final</p>
+<p>Então vamos começar a criar esses arquivos</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ mkdir -p examples/gcp/cloud-function-v2
+</span></span><span style="display:flex;"><span>❯ touch examples/gcp/cloud-function-v2/main.tf
+</span></span></code></pre></div><p>No <code>main.tf</code> vamos preencher:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hcl" data-lang="hcl"><span style="display:flex;"><span><span style="color:#ff79c6">module</span> <span style="color:#f1fa8c">&#34;function&#34;</span> {
+</span></span><span style="display:flex;"><span>  source <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;../../modules/gcp/cloud-function-v2&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  name        <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;my-function&#34;</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;My function&#34;</span>
+</span></span><span style="display:flex;"><span>  region      <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;us-central1&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  runtime     <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;nodejs16&#34;</span>
+</span></span><span style="display:flex;"><span>  entry_point <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;helloGET&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  source_path <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;./src&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  max_instances <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>  memory        <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">256</span>
+</span></span><span style="display:flex;"><span>  timeout       <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">60</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Vamos criar uma função para conseguir fazer deploy no mesmo, para isso vamos usar o exemplo na própria doc do google, para encaixar o mesmo aqui basta usar</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ mkdir examples/gcp/cloud-function-v2/src
+</span></span><span style="display:flex;"><span>❯ touch examples/gcp/cloud-function-v2/src/index.js
+</span></span><span style="display:flex;"><span>❯ touch examples/gcp/cloud-function-v2/src/package.json
+</span></span></code></pre></div><p>e preencher com o seguinte no <code>index.js</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> functions <span style="color:#ff79c6">=</span> require(<span style="color:#f1fa8c">&#39;@google-cloud/functions-framework&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Register an HTTP function with the Functions Framework that will be executed
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// when you make an HTTP request to the deployed function&#39;s endpoint.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>functions.http(<span style="color:#f1fa8c">&#39;helloGET&#39;</span>, (req, res) =&gt; {
+</span></span><span style="display:flex;"><span>  res.send(<span style="color:#f1fa8c">&#39;Hello World!&#39;</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>e no <code>package.json</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;name&#34;</span>: <span style="color:#f1fa8c">&#34;nodejs-docs-samples-functions-hello-world-get&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;version&#34;</span>: <span style="color:#f1fa8c">&#34;0.0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;private&#34;</span>: <span style="color:#ff79c6">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;license&#34;</span>: <span style="color:#f1fa8c">&#34;Apache-2.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;author&#34;</span>: <span style="color:#f1fa8c">&#34;Google Inc.&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;repository&#34;</span>: {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;git&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;url&#34;</span>: <span style="color:#f1fa8c">&#34;https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;engines&#34;</span>: {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;node&#34;</span>: <span style="color:#f1fa8c">&#34;&gt;=16.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;scripts&#34;</span>: {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;test&#34;</span>: <span style="color:#f1fa8c">&#34;c8 mocha -p -j 2 test/*.test.js --timeout=6000 --exit&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;dependencies&#34;</span>: {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;@google-cloud/functions-framework&#34;</span>: <span style="color:#f1fa8c">&#34;^3.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;devDependencies&#34;</span>: {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;c8&#34;</span>: <span style="color:#f1fa8c">&#34;^8.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;gaxios&#34;</span>: <span style="color:#f1fa8c">&#34;^6.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;mocha&#34;</span>: <span style="color:#f1fa8c">&#34;^10.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">&#34;wait-port&#34;</span>: <span style="color:#f1fa8c">&#34;^1.0.4&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Pronto! Agora temos um exemplo de uso, falta fazer o mesmo funcionar.</p>
+<h3 id="modulos">
+  Modulos
+  <a class="heading-link" href="#modulos">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Nessa parte é onde vai estar toda a lógica terraform por trás desse projeto, é esse o código que vai ser reaproveitado pelos demais times. O motivo pelo qual começamos pelos outros pontos e não por ele é que a ideia é termos módulos que funcionem de acordo com os times que usem, e não times que precisem se adequar para utilizar os módulos.</p>
+<p>Vamos começar criando a pasta e os arquivos básicos pro módulo</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>❯ mkdir -p modules/gcp/cloud-function-v2
+</span></span><span style="display:flex;"><span>❯ touch modules/gcp/cloud-function-v2/main.tf modules/gcp/cloud-function-v2/variables.tf
+</span></span></code></pre></div><p>Agora vamos escrever a lógica terraform, no <code>main.tf</code> escreva:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hcl" data-lang="hcl"><span style="display:flex;"><span><span style="color:#ff79c6">resource</span> <span style="color:#f1fa8c">&#34;google_storage_bucket&#34; &#34;main&#34;</span> {
+</span></span><span style="display:flex;"><span>  // <span style="color:#ff79c6">Aqui</span> <span style="color:#ff79c6">definimos</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">bucket</span> <span style="color:#ff79c6">que</span> <span style="color:#ff79c6">armazenará</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">código</span> <span style="color:#ff79c6">fonte</span> <span style="color:#ff79c6">da</span> <span style="color:#ff79c6">nossa</span> <span style="color:#ff79c6">função</span>
+</span></span><span style="display:flex;"><span>  name                        <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;${var.name}-gcf-source&#34;</span>
+</span></span><span style="display:flex;"><span>  location                    <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;US&#34;</span>
+</span></span><span style="display:flex;"><span>  uniform_bucket_level_access <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">true</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">data</span> <span style="color:#f1fa8c">&#34;archive_file&#34; &#34;source&#34;</span> {
+</span></span><span style="display:flex;"><span>  // <span style="color:#ff79c6">Com</span> <span style="color:#ff79c6">esse</span> <span style="color:#ff79c6">recurso</span> <span style="color:#ff79c6">nós</span> <span style="color:#ff79c6">zipamos</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">código</span> <span style="color:#ff79c6">fonte</span> <span style="color:#ff79c6">da</span> <span style="color:#ff79c6">nossa</span> <span style="color:#ff79c6">função</span> <span style="color:#ff79c6">para</span> <span style="color:#ff79c6">ser</span> <span style="color:#ff79c6">enviado</span> <span style="color:#ff79c6">ao</span> <span style="color:#ff79c6">bucket</span>
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;zip&#34;</span>
+</span></span><span style="display:flex;"><span>  source_dir  <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">source_path</span>
+</span></span><span style="display:flex;"><span>  output_path <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;function-source.zip&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">resource</span> <span style="color:#f1fa8c">&#34;google_storage_bucket_object&#34; &#34;main&#34;</span> {
+</span></span><span style="display:flex;"><span>  // <span style="color:#ff79c6">Aqui</span> <span style="color:#ff79c6">selecionamos</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">arquivo</span> <span style="color:#ff79c6">zipado</span> <span style="color:#ff79c6">e</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">enviamos</span> <span style="color:#ff79c6">para</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">bucket</span>
+</span></span><span style="display:flex;"><span>  name         <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">data</span>.<span style="color:#ff79c6">archive_file</span>.<span style="color:#ff79c6">source</span>.<span style="color:#ff79c6">output_path</span>
+</span></span><span style="display:flex;"><span>  bucket       <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">google_storage_bucket</span>.<span style="color:#ff79c6">main</span>.<span style="color:#ff79c6">name</span>
+</span></span><span style="display:flex;"><span>  source       <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">data</span>.<span style="color:#ff79c6">archive_file</span>.<span style="color:#ff79c6">source</span>.<span style="color:#ff79c6">output_path</span>
+</span></span><span style="display:flex;"><span>  content_type <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;application/zip&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // <span style="color:#ff79c6">Dependemos</span> <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">bucket</span> <span style="color:#ff79c6">e</span> <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">arquivo</span> <span style="color:#ff79c6">para</span> <span style="color:#ff79c6">garantir</span> <span style="color:#ff79c6">que</span> <span style="color:#ff79c6">eles</span> <span style="color:#ff79c6">sejam</span> <span style="color:#ff79c6">criados</span> <span style="color:#ff79c6">antes</span> <span style="color:#ff79c6">da</span> <span style="color:#ff79c6">função</span>
+</span></span><span style="display:flex;"><span>  depends_on <span style="color:#ff79c6">=</span> [ <span style="color:#ff79c6">data</span>.<span style="color:#ff79c6">archive_file</span>.<span style="color:#ff79c6">source</span>, <span style="color:#ff79c6">google_storage_bucket</span>.<span style="color:#ff79c6">main</span> ]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">resource</span> <span style="color:#f1fa8c">&#34;google_cloudfunctions2_function&#34; &#34;main&#34;</span> {
+</span></span><span style="display:flex;"><span>  name        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">name</span>
+</span></span><span style="display:flex;"><span>  location    <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">location</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">description</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">build_config</span> {
+</span></span><span style="display:flex;"><span>	runtime     <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">runtime</span>
+</span></span><span style="display:flex;"><span>	entry_point <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">entry_point</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">source</span> {
+</span></span><span style="display:flex;"><span>	  <span style="color:#ff79c6">storage_source</span> {
+</span></span><span style="display:flex;"><span>	bucket <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">google_storage_bucket</span>.<span style="color:#ff79c6">main</span>.<span style="color:#ff79c6">name</span>
+</span></span><span style="display:flex;"><span>	object <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">google_storage_bucket_object</span>.<span style="color:#ff79c6">main</span>.<span style="color:#ff79c6">name</span>
+</span></span><span style="display:flex;"><span>	  }
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">service_config</span> {
+</span></span><span style="display:flex;"><span>	max_instance_count <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">max_instances</span>
+</span></span><span style="display:flex;"><span>	available_memory   <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">memory</span>
+</span></span><span style="display:flex;"><span>	timeout_seconds    <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">var</span>.<span style="color:#ff79c6">timeout</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  // <span style="color:#ff79c6">Esperamos</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">objeto</span> <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">bucket</span> <span style="color:#ff79c6">para</span> <span style="color:#ff79c6">garantir</span> <span style="color:#ff79c6">que</span> <span style="color:#ff79c6">o</span> <span style="color:#ff79c6">código</span> <span style="color:#ff79c6">fonte</span> <span style="color:#ff79c6">esteja</span> <span style="color:#ff79c6">disponível</span>
+</span></span><span style="display:flex;"><span>  depends_on <span style="color:#ff79c6">=</span> [ <span style="color:#ff79c6">google_storage_bucket_object</span>.<span style="color:#ff79c6">main</span> ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>E vamos definir as variáveis no <code>variables.tf</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hcl" data-lang="hcl"><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;name&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The name of the function&#34;</span>
+</span></span><span style="display:flex;"><span>  nullable    <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;description&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The description of the function&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;My function&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;region&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The region where the function will be deployed&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;us-central1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;runtime&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The runtime of the function&#34;</span>
+</span></span><span style="display:flex;"><span>  nullable    <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;entry_point&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The entry point of the function&#34;</span>
+</span></span><span style="display:flex;"><span>  nullable    <span style="color:#ff79c6">=</span> <span style="color:#8be9fd">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;source_path&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">string</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The path to the source code of the function&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;./src&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;max_instances&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">number</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The maximum number of instances that the function can have&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;memory&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">number</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The amount of memory in MB that the function can use&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">256</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">variable</span> <span style="color:#f1fa8c">&#34;timeout&#34;</span> {
+</span></span><span style="display:flex;"><span>  type        <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">number</span>
+</span></span><span style="display:flex;"><span>  description <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;The timeout in seconds for the function&#34;</span>
+</span></span><span style="display:flex;"><span>  default     <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">60</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="doc">
+  Doc
+  <a class="heading-link" href="#doc">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h2 id="conclusão">
+  Conclusão
+  <a class="heading-link" href="#conclus%c3%a3o">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2019 -
+    
+    2024
+     Nivaldo Melo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

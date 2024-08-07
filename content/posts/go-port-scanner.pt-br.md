@@ -1,26 +1,26 @@
 +++
 author = "nivaldo melo"
-title = "Building a Simple Port Scanner with GO"
+title = "Construindo um Port Scanner com Golang"
 date = "2020-10-25"
-description = "A guide to build a port scanner using golang"
+description = "Um guia para montar um port scanner com golang"
 tags = [ "golang", ]
 +++
 
-## Building a Simple Port-Scanner with Go
+## Construindo um Port Scanner com Golang
 
-These days I wanted to make a new project with go, so I went to the [programming challenges](https://github.com/thinkbreak/programming-challenges) page and searched for something, the port scanner caught my attention, so I decided to went for it.
+Esses dias eu quis fazer um projetinho com go, então visitei a [programming challenges](https://github.com/thinkbreak/programming-challenges) e busquei por algo, o port scanner chamou minha atenção então decidir pegar ele.
 
 ----------
 
 ## Disclaimer
 
-What we're gonna use build can't be used against servers which you don't have a permission to run. Read [this](https://nmap.org/book/legal-issues.html "nmap legal issues") to understand more
+O que vamos montar aqui não pode ser usado em servidores nos quais você não possui permissão para executar. Leia [essa](https://nmap.org/book/legal-issues.html "nmap legal issues") página para entender melhor
 
-## Initial Version
+## Versão Inicial
 
-So first we’ll define a function called `PortScan` which will accept a `server` parameter that will be the server which we’ll scan for it and return a list with the available ports. 
+Então primeiro vamos definir uma versão chamada `PortScan` que irá receber um parâmetro `servidor` o qual será o servidor que iremos escanear e retornar uma lista com as portas disponíveis no mesmo.
 
-A port number is a 16-bit unsigned integer, thus ranging from 0 to 65535, but 0 is reserved and can’t be used, so we know the number of ports that we’ve to scan. Also we’ve to think about how we’re gonna check if the port is available, for this we can use the `net` package, he provides us the `Dial` function, which we can use to test the connection, but a better one would be the `DialTimeout` because it gives us the possibility to set a timeout to the connection. So let’s define our `PortScan()`
+Um número de porta é um inteiro do tipo 16-bit unsigned, portanto seu range é de 0 a 65535, porém 0 é uma porta reservada e não pode ser usada, com isso já sabemos qual a quantidade de portas que teremos de verificar. Nós também precisamos pensar em como vamos verificar se uma porta está disponível, para isso usaremos o pacote `net`, ele nos fornece a função `Dial`, a qual podemos usar para testar a conexão, mas uma maneira melhor seria usar a `DialTimeout` pois nos dá a possibilidade de configurar um timeout para a conexão. Sem mais delongas vamos definir nossa `PortScan()`
 
 ```go
 func PortScan(server string) []int {
@@ -41,19 +41,19 @@ func PortScan(server string) []int {
 }
 ```
 
-For this code to work we have to import the following packages:
+Para esse código funcionar precisamos importar os seguintes pacotes:
 
-`net`: Package for the `DialTimeout` function
+`net`: O pacote com a função `DialTimeout`
 
-`strconv`: To convert integers to strings and build our server variable
+`strconv`: Para converter inteiros para strings e montar a nossa variável com o servidor
 
-`time`: To create a *time.Second parameter
+`time`: Para criar o parâmetro *time.Second
 
-`os`: To get arguments from the command line (we’ll see where ahead)
+`os`: Para recuperar os argumentos da linha de comando (Veremos onde mais a frente)
 
-`fmt`: To print results to the command line
+`fmt`: Para exibir os resultados na linha de comando
 
-Now for our main function
+Agora para nossa função principal
 
 ```go
 func main() {
@@ -66,7 +66,7 @@ func main() {
 }
 ```
 
-Now that we have our program, we want to use it, to use you can just run with `go run main.go <server>` where server is the ip address which you’ll want to check. Let’s use `time` command to check for the time it takes to run:
+Agora que já temos nosso programa, vamos querer usá-lo, para usar isso você só precisa rodar `go run main.go <servidor>` onde o servidor é o endereço de IP que vc quer checar. Vamos usar o comando `time` para verificar o tempo que leva para ser executado:
 
 ```bash
 ┌─[nivaldogmelo@yggdrasil] - [/port-scanner]
@@ -80,15 +80,15 @@ sys     12.14s
 
 ```
 
-Note that it took a reasonable time, that’s because we check one port at a time, so let’s try to check for multiple ports at the same time
+Observe que elvou um tempo razoável, isso se deve ao fato de que estamos checando uma porta de cada vez, vamos tentar acelerar a execução checando múltiplas portas ao mesmo tempo
 
 ----------
 
-## Using Goroutines
+## Usando Goroutines
 
-To increase the speed of our test we could check at multiple ports at the same time. For this we can use _go routines_, which are similar to _threads_ in languages like Java. If you don’t know what a routine is I recommend reading the [Golang Bot](https://golangbot.com/learn-golang-series/) tutorial (sections 20–23) to have an idea about what we’re gonna handle.
+Para aumentar a velocidade do nosso teste podemos checar várias portas ao mesmo tempo. Para isso nós podemos usar _go routines_, o que são similares a _threads_ em linguagens como Java. Se você não sabe o que uma goroutine é recomendo a leitura do [Golang Bot](https://golangbot.com/learn-golang-series/) (em inglês) (seções 20-23) para ter uma ideia do que vamos lidar.
 
-The first thing we’re gonna do is import the `sync` package to deal with the goroutines. Now we’re gonna do some changes at the structure of the code. First we’re gonna make the `available` variable a global one, because it will create be manipulated by multiple routines. Second it’s to create a struct to define a job that will be executed
+A primeira coisa que vamos fazer é importar o pacote `sync` para lidar com as goroutines. Agora vamos fazer algumas mudanças na estrutura do código. Primeiro vamos fazer da variável `available` uma variável global, pois será manipulada por múltiplas rotinas. Segundo é criar uma struct para definir o job que será executado.
 
 ```go
 type Job struct {
@@ -100,11 +100,11 @@ var available []int
 var jobs = make(chan Job, 10)
 ```
 
-The `jobs` variable keeps a buffered channel, which is a channel that will store a buffer of jobs to be executed, we defined the channel to have a length of 10, which means it can hold a maximum of 10 jobs at the same time, any other job will be blocked until some one of the jobs is terminated.
+A variável `jobs` mantem um canal bufferizado, que é um cnal que vai manter registro do buffer dos jobs que serão executados, nós definimos um canal de tamanho 10, o que significa que pode executar um total de 10 jobs ao mesmo tempo, qualquer outra execução será bloqueada até que os jobs em andamento sejam finalizados.
 
-Now we’re gonna define our `createWorkerPool()`, which will create our workers to execute the job. Basically it’s here where we define how many concurrent jobs we’ll run at the same time.
+Agora vamos definir nossa função `createWorkerPool()`, a qual irá criar nossos workers para executar os jobs. Basicamente é aqui onde definiremos quantos jobs concorrentes queremos executar.
 
-To initiate a new goroutine we just need to execute our function with a `go` preceding it. We use the `wg.Add(1)` to add a new routine to execute our jobs. At the end the `wg.Wait()` is required to our main routine to wait for the subsequent routines to be completed before moving to the next step. The `go worker(&wg)` needs to use a pointer so that way it will use the same `WaitGroup` created by the function, otherwise would create a new one and the tasks would be executed at another goroutines and our original wg group of routines would never be finished
+Para iniciar uma nova goroutine só precisamos executar nossa função com um `go` vindo antes. Nós usamos o `wg.Add(1)` para adicionar uma nova rotina para executar nossos jobs. Ao final o `wg.Wait()` é necessário para que nossa rotina principal espere pelas subsequentes serem finalizadas antes de ir para o próximo passo. O `go worker(&wg)` precisa usar um ponteiro de forma que use o mesmo `WaitGroup` criado pela função, caso contrário sempre iria iniciar um novo e as tarefas seriam executadas em outras goroutines e nosso grupo de espera original (wg) nunca seria finalizado
 
 ```go
 func createWorkerPool(noOfWorkers int) {
@@ -117,7 +117,7 @@ func createWorkerPool(noOfWorkers int) {
 }
 ```
 
-Now we need to create a `worker()` to execute our job.
+Agora vamos criar a função `worker()` para executar nosso job.
 
 ```go
 func worker(wg *sync.WaitGroup) {

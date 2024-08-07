@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on nivaldogmelo</title>
+    <link>http://localhost:1313/tags/golang/</link>
+    <description>Recent content in Golang on nivaldogmelo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 07 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Estruturando seu Terraform</title>
+      <link>http://localhost:1313/posts/structuring-terraform.pt-br-copy-1/</link>
+      <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/structuring-terraform.pt-br-copy-1/</guid>
+      <description>Estruturando seu Terraform Link to heading Como sabemos o Terraform é uma das ferramentas mais populares quando se trata de IAC declarativa, porém algo que sem pre me deixou um pouco perdido foi como estruturar meus projetos. Não é difícil acharmos um tutorial de boas práticas de como devemos nomear, porém sempre fiquei um pouco perdido em questão de organização. Devo usar módulos? Workspaces? Até onde devo agregar os recursos em um único arquivo .</description>
+    </item>
+    
+    <item>
+      <title>Building a Simple Port Scanner with GO</title>
+      <link>http://localhost:1313/posts/go-port-scanner/</link>
+      <pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/go-port-scanner/</guid>
+      <description>Building a Simple Port-Scanner with Go Link to heading These days I wanted to make a new project with go, so I went to the programming challenges page and searched for something, the port scanner caught my attention, so I decided to went for it.
+Disclaimer Link to heading What we&amp;rsquo;re gonna use build can&amp;rsquo;t be used against servers which you don&amp;rsquo;t have a permission to run. Read this to understand more</description>
+    </item>
+    
+  </channel>
+</rss>
