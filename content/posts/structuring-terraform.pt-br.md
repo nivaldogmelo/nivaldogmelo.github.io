@@ -401,4 +401,8 @@ variable "timeout" {
 
 ### Doc
 
+Agora que configuramos a um exemplo de uso para o móduglo e a lógica por trás do nosso módulo terraform, vamos automatizar a parte da documentação. Para facilitar isso vamos utilizar a [terraform-docs](https://terraform-docs.io/), uma ferramente que facilita gerarmos uma documentação aproveitando o próprio código hcl que escrevemos, com isso facilitando a manutenção da mesma.
+
+
+
 ## Conclusão
