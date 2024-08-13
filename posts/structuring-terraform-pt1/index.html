@@ -28,9 +28,7 @@
 </span></span><span style=display:flex><span>└── test/
 </span></span></code></pre></div><hr><h2 id=writing-your-code>Writing your code
 <a class=heading-link href=#writing-your-code><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
-<span class=sr-only>Link to heading</span></a></h2><p>Before we start, let&rsquo;s define the kind of service we&rsquo;re going to write. For this example, we&rsquo;ll create a Cloud Function on GCP. In a Cloud Function, there are multiple ways to store your source code; in this example, we&rsquo;ll use a GCS bucket. Here&rsquo;s the structure:</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>  graph TD;
-	  CF--&gt;Bucket;
-</code></pre><h3 id=initializing-the-repository>Initializing the Repository
+<span class=sr-only>Link to heading</span></a></h2><p>Before we start, let&rsquo;s define the kind of service we&rsquo;re going to write. For this example, we&rsquo;ll create a Cloud Function on GCP. In a Cloud Function, there are multiple ways to store your source code; in this example, we&rsquo;ll use a GCS bucket.</p><h3 id=initializing-the-repository>Initializing the Repository
 <a class=heading-link href=#initializing-the-repository><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h3><p>This part is straightforward; we just need to start a Golang project, which can be done as follows:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ mkdir terraform-modules-structure <span style=color:#ff79c6>&amp;&amp;</span> <span style=color:#8be9fd;font-style:italic>cd</span> terraform-modules-structure
 </span></span><span style=display:flex><span>❯ go mod init terraform-modules-structure

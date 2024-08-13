@@ -28,9 +28,7 @@
 </span></span><span style=display:flex><span>└── test/
 </span></span></code></pre></div><hr><h2 id=escrevendo-o-código>Escrevendo o código
 <a class=heading-link href=#escrevendo-o-c%c3%b3digo><i class="fa-solid fa-link" aria-hidden=true title="Link para o cabeçalho"></i>
-<span class=sr-only>Link para o cabeçalho</span></a></h2><p>Antes de começar vamos então definir o tipo de serviço que queremos subir. Para esse exemplo vamos criar uma Cloud Function no GCP. Em uma cloud Function podemos escolher alguns tipos de fontes para armazenar o nosso código fonte; para esse exemplo vamos utilizar um Bucket no GCS. Então segue a estrutura:</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>  graph TD;
-	  CF--&gt;Bucket;
-</code></pre><h3 id=inicializando-o-repositório>Inicializando o Repositório
+<span class=sr-only>Link para o cabeçalho</span></a></h2><p>Antes de começar vamos então definir o tipo de serviço que queremos subir. Para esse exemplo vamos criar uma Cloud Function no GCP. Em uma cloud Function podemos escolher alguns tipos de fontes para armazenar o nosso código fonte; para esse exemplo vamos utilizar um Bucket no GCS.</p><h3 id=inicializando-o-repositório>Inicializando o Repositório
 <a class=heading-link href=#inicializando-o-reposit%c3%b3rio><i class="fa-solid fa-link" aria-hidden=true title="Link para o cabeçalho"></i>
 <span class=sr-only>Link para o cabeçalho</span></a></h3><p>Essa parte é bem simples, a princípio só precisamos iniciar um projeto golang, o que pode ser feito da seguinte forma</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ mkdir terraform-modules-structure <span style=color:#ff79c6>&amp;&amp;</span> <span style=color:#8be9fd;font-style:italic>cd</span> terraform-modules-structure
 </span></span><span style=display:flex><span>❯ go mod init terraform-modules-structure
