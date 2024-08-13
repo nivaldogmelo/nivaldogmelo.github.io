@@ -94,15 +94,15 @@
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Ótimo! Agora temos um caso de uso, só falta documentar o mesmo.</p><h4 id=documentação-1>Documentação
 <a class=heading-link href=#documenta%c3%a7%c3%a3o-1><i class="fa-solid fa-link" aria-hidden=true title="Link para o cabeçalho"></i>
-<span class=sr-only>Link para o cabeçalho</span></a></h4><p>Agora que temos um caso de uso, é interessante fornecer um README explicando como se utilizar, dessa forma tornando a adoção mais fácil. Para isso vamos utilizar uma ferramenta chamada <a href=https://terraform-docs.io/user-guide/introduction/ class=external-link target=_blank rel=noopener>terraform-docs</a>. Após o instalar vamos configurar o seguinte:</p><p>Primeiro criamos o arquivo <code>examples/.terraform-docs.yml</code>, o qual vai fornecer uma estrutura base para ser utilizada em todos os exemplos.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>formatter: &#34;markdown table&#34;
-</span></span><span style=display:flex><span>header-from: header.md # Indicamos de onde virá o conteúdo para servir de header do readme
+<span class=sr-only>Link para o cabeçalho</span></a></h4><p>Agora que temos um caso de uso, é interessante fornecer um README explicando como se utilizar, dessa forma tornando a adoção mais fácil. Para isso vamos utilizar uma ferramenta chamada <a href=https://terraform-docs.io/user-guide/introduction/ class=external-link target=_blank rel=noopener>terraform-docs</a>. Após o instalar vamos configurar o seguinte:</p><p>Primeiro criamos o arquivo <code>examples/.terraform-docs.yml</code>, o qual vai fornecer uma estrutura base para ser utilizada em todos os exemplos.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#ff79c6>formatter</span>: <span style=color:#f1fa8c>&#34;markdown table&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#ff79c6>header-from</span>: header.md <span style=color:#6272a4># Indicamos de onde virá o conteúdo para servir de header do readme</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>content: |-
-</span></span><span style=display:flex><span>  {{ .Header }}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  ```hcl
-</span></span><span style=display:flex><span>  {{ include &#34;main.tf&#34; }}
-</span></span><span style=display:flex><span>  ```
+</span></span><span style=display:flex><span><span style=color:#ff79c6>content</span>: |-<span style=color:#f1fa8c>
+</span></span></span><span style=display:flex><span><span style=color:#f1fa8c>  {{ .Header }}
+</span></span></span><span style=display:flex><span><span style=color:#f1fa8c>
+</span></span></span><span style=display:flex><span><span style=color:#f1fa8c>  ```hcl
+</span></span></span><span style=display:flex><span><span style=color:#f1fa8c>  {{ include &#34;main.tf&#34; }}
+</span></span></span><span style=display:flex><span><span style=color:#f1fa8c>  ```</span>  
 </span></span></code></pre></div><p>Após isso criamos o arquivo <code>examples/gcp/cloud-function-v2/header.md</code>, aqui escrevemos um header específico para o nosso exemplo, nesse caso:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span><span style=font-weight:700>## Criando uma Cloud Function
 </span></span></span><span style=display:flex><span><span style=font-weight:700></span>
 </span></span><span style=display:flex><span>Esse exemplo demonstra como criar uma Cloud Function no GCP via Terraform. O exemplo irá comprimir o código dentro da pasta <span style=color:#f1fa8c>`src/`</span> e o salvar em um bucket no GCS.
