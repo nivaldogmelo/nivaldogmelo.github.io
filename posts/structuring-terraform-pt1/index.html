@@ -1,0 +1,120 @@
+<!doctype html><html lang=en><head><title>Structuring a Terraform project pt1 · nivaldogmelo
+</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Nivaldo Melo"><meta name=description content="A guide about how to structure a terraform project inside your team"><meta name=keywords content="blog,developer,personal"><meta name=twitter:card content="summary"><meta name=twitter:title content="Structuring a Terraform project pt1"><meta name=twitter:description content="A guide about how to structure a terraform project inside your team"><meta property="og:url" content="https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/"><meta property="og:site_name" content="nivaldogmelo"><meta property="og:title" content="Structuring a Terraform project pt1"><meta property="og:description" content="A guide about how to structure a terraform project inside your team"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-08-13T00:00:00+00:00"><meta property="article:modified_time" content="2024-08-13T00:00:00+00:00"><meta property="article:tag" content="Golang"><meta property="article:tag" content="Terraform"><link rel=canonical href=https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/><link rel=preload href=/fonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.36f76aaf39a14ecf5c3a3c6250dcaf06c238b3d8365d17d646f95cb1874e852b.css integrity="sha256-NvdqrzmhTs9cOjxiUNyvBsI4s9g2XRfWRvlcsYdOhSs=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.593028e7f7ac55c003b79c230d1cd411bb4ca53b31556c3abb7f027170e646e9.css integrity="sha256-WTAo5/esVcADt5wjDRzUEbtMpTsxVWw6u38CcXDmRuk=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/custom.min.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css integrity="sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/images/favicon.svg sizes=any><link rel=icon type=image/png href=/img/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/img/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://nivaldogmelo.github.io/>nivaldogmelo
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fa-solid fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/posts/>Blog</a></li><li class="navigation-item menu-separator"><span>|</span></li><li class=navigation-item><a href=/pt-br/>🇧🇷</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/>Structuring a Terraform project pt1</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa-solid fa-calendar" aria-hidden=true></i>
+<time datetime=2024-08-13T00:00:00Z>August 13, 2024
+</time></span><span class=reading-time><i class="fa-solid fa-clock" aria-hidden=true></i>
+6-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
+<span class=tag><a href=/tags/golang/>Golang</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/terraform/>Terraform</a></span></div></div></header><div class=post-content><h2 id=structuring-a-terraform-project-pt1>Structuring a Terraform project Pt.1
+<a class=heading-link href=#structuring-a-terraform-project-pt1><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>As we know, Terraform is one of the most popular tools when we talk about declarative Infrastructure as Code (IAC**. However, one aspect that often feels a bit unclear for me is how to structure projects effectively. While it&rsquo;s easy to find tutorials on best practices for naming resources, figuring out the right folder structure can be more challenging. Should you use modules? Workspaces? How much should you aggregate resources into a single .tf file?</p><p>To address these questions, I decided to create a structured module that I could use across my projects. This structure includes functionalities that I consider essential. The module is built on four key pillars:</p><ul><li><strong>Modules</strong>: These are used to group related services that function as a unit, reducing code repetition and improving maintainability.</li><li><strong>Examples</strong>: This section contains use case examples to make it easier for teams to adopt this structure.</li><li><strong>Unit Tests</strong>: These help us detect failures early in the development process.</li><li><strong>Documentation</strong>: We&rsquo;ll aim to make the documentation process as seamless as possible, so it doesn&rsquo;t become a burden during development.</li></ul><p>Let&rsquo;s start by exploring why these pillars are important.</p><hr><h3 id=modules>Modules
+<a class=heading-link href=#modules><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>As many of you know, a module in Terraform is a way to increase code reusability by aggregating resources that are often created together. By doing this, you can centralize configuration in a single file, making bulk changes easier and more efficient. It&rsquo;s important to remember that when you&rsquo;re writing modules, other people might depend on your code. Therefore, it&rsquo;s crucial to be mindful of this before making any breaking changes.</p><h3 id=examples>Examples
+<a class=heading-link href=#examples><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>All examples should have a practical use case, making it easier for readers to see how they can be applied in their own environments.</p><h3 id=unit-tests>Unit Tests
+<a class=heading-link href=#unit-tests><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>Testing infrastructure can be uncommon due to potential costs, but when done in a controlled environment, it greatly simplifies development and maintenance. Through tests, we can describe the most important scenarios that the module should cover, helping to prevent unwanted breaking changes. Another advantage is that by documenting these scenarios, we don&rsquo;t have to rely on someone remembering to manually test everything, which can lead to errors.</p><h3 id=documentation>Documentation
+<a class=heading-link href=#documentation><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>Last but not least, there&rsquo;s the documentation. Good documentation makes it easier for teams to understand and adopt your product. However, if done manually every time, it&rsquo;s easy for things to become outdated, leading to inaccurate and difficult-to-follow documents. That&rsquo;s why we aim to make the documentation process as seamless as possible, ensuring that it always stays up to date with the project&rsquo;s code.</p><h2 id=final-look>Final look
+<a class=heading-link href=#final-look><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>So to have an idea of what we&rsquo;re aiming to, this is the repo structure that we&rsquo;re aiming to have in the end. You may notice that we have som e <code>.go</code> files, it&rsquo;s because we&rsquo;re gonna use a tool written in golang to write our tests</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>terraform-modules-structure
+</span></span><span style=display:flex><span>├── examples/
+</span></span><span style=display:flex><span>├── go.mod
+</span></span><span style=display:flex><span>├── go.sum
+</span></span><span style=display:flex><span>├── modules/
+</span></span><span style=display:flex><span>├── README.md
+</span></span><span style=display:flex><span>└── test/
+</span></span></code></pre></div><hr><h2 id=writing-your-code>Writing your code
+<a class=heading-link href=#writing-your-code><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Before we start, let&rsquo;s define the kind of service we&rsquo;re going to write. For this example, we&rsquo;ll create a Cloud Function on GCP. In a Cloud Function, there are multiple ways to store your source code; in this example, we&rsquo;ll use a GCS bucket. Here&rsquo;s the structure:</p><pre tabindex=0><code class=language-mermaid data-lang=mermaid>  graph TD;
+	  CF--&gt;Bucket;
+</code></pre><h3 id=initializing-the-repository>Initializing the Repository
+<a class=heading-link href=#initializing-the-repository><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>This part is straightforward; we just need to start a Golang project, which can be done as follows:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ mkdir terraform-modules-structure <span style=color:#ff79c6>&amp;&amp;</span> <span style=color:#8be9fd;font-style:italic>cd</span> terraform-modules-structure
+</span></span><span style=display:flex><span>❯ go mod init terraform-modules-structure
+</span></span></code></pre></div><p>Note that I&rsquo;ve named my project <code>terraform-modules-structure</code>, but you can name it whatever you like.</p><h3 id=examples-1>Examples
+<a class=heading-link href=#examples-1><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>This is arguably the most important phase of the project. Here, we&rsquo;ll define the module&rsquo;s use cases, thinking like a final user. Therefore, the examples need to be clear, practical, and stable; otherwise, adoption of the project might be compromised.</p><p>As end users, we need to create a Cloud Function in GCP. Let&rsquo;s start by considering which parameters we should control and which ones we shouldn&rsquo;t.</p><p>Looking at this <a href=https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions2_function#example-usage---cloudfunctions2-basic class=external-link target=_blank rel=noopener>example</a>, we&rsquo;ll propose that the user can control the following parameters:</p><ul><li>function name</li><li>region</li><li>description</li><li>runtime</li><li>entry_point</li><li>max_instance</li><li>memory</li><li>timeout</li></ul><p>Other parameteres can be defined within the module itself, including the connection to the bucket.</p><h4 id=terraform-files>Terraform files
+<a class=heading-link href=#terraform-files><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h4><p>So let&rsquo;s start creating this files</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ mkdir -p examples/gcp/cloud-function-v2
+</span></span><span style=display:flex><span>❯ touch examples/gcp/cloud-function-v2/main.tf
+</span></span></code></pre></div><p>In <code>main.tf</code> let&rsquo;s write:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#ff79c6>module</span> <span style=color:#f1fa8c>&#34;function&#34;</span> {
+</span></span><span style=display:flex><span>  source <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;../../modules/gcp/cloud-function-v2&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  name        <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;my-function&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;My function&#34;</span>
+</span></span><span style=display:flex><span>  region      <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;us-central1&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  runtime     <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;nodejs16&#34;</span>
+</span></span><span style=display:flex><span>  entry_point <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;helloGET&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  source_path <span style=color:#ff79c6>=</span> <span style=color:#f1fa8c>&#34;./src&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  max_instances <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>1</span>
+</span></span><span style=display:flex><span>  memory        <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>256</span>
+</span></span><span style=display:flex><span>  timeout       <span style=color:#ff79c6>=</span> <span style=color:#bd93f9>60</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=deploying-the-source-code-for-the-function>Deploying the source code for the function
+<a class=heading-link href=#deploying-the-source-code-for-the-function><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h4><p>Let&rsquo;s create the function so that we&rsquo;re able to deploy it. To do this, follow the example in the official Google documentation. To fit it into our structure, you just need to do the following:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ mkdir examples/gcp/cloud-function-v2/src
+</span></span><span style=display:flex><span>❯ touch examples/gcp/cloud-function-v2/src/index.js
+</span></span><span style=display:flex><span>❯ touch examples/gcp/cloud-function-v2/src/package.json
+</span></span></code></pre></div><p>and then fill the <code>index.js</code> with:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#ff79c6>const</span> functions <span style=color:#ff79c6>=</span> require(<span style=color:#f1fa8c>&#39;@google-cloud/functions-framework&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#6272a4>// Register an HTTP function with the Functions Framework that will be executed
+</span></span></span><span style=display:flex><span><span style=color:#6272a4>// when you make an HTTP request to the deployed function&#39;s endpoint.
+</span></span></span><span style=display:flex><span><span style=color:#6272a4></span>functions.http(<span style=color:#f1fa8c>&#39;helloGET&#39;</span>, (req, res) =&gt; {
+</span></span><span style=display:flex><span>  res.send(<span style=color:#f1fa8c>&#39;Hello World!&#39;</span>);
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><p>and <code>package.json</code> with:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;name&#34;</span>: <span style=color:#f1fa8c>&#34;nodejs-docs-samples-functions-hello-world-get&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;version&#34;</span>: <span style=color:#f1fa8c>&#34;0.0.1&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;private&#34;</span>: <span style=color:#ff79c6>true</span>,
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;license&#34;</span>: <span style=color:#f1fa8c>&#34;Apache-2.0&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;author&#34;</span>: <span style=color:#f1fa8c>&#34;Google Inc.&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;repository&#34;</span>: {
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;type&#34;</span>: <span style=color:#f1fa8c>&#34;git&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;url&#34;</span>: <span style=color:#f1fa8c>&#34;https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;engines&#34;</span>: {
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;node&#34;</span>: <span style=color:#f1fa8c>&#34;&gt;=16.0.0&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;scripts&#34;</span>: {
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;test&#34;</span>: <span style=color:#f1fa8c>&#34;c8 mocha -p -j 2 test/*.test.js --timeout=6000 --exit&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;dependencies&#34;</span>: {
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;@google-cloud/functions-framework&#34;</span>: <span style=color:#f1fa8c>&#34;^3.1.0&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#ff79c6>&#34;devDependencies&#34;</span>: {
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;c8&#34;</span>: <span style=color:#f1fa8c>&#34;^8.0.0&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;gaxios&#34;</span>: <span style=color:#f1fa8c>&#34;^6.0.0&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;mocha&#34;</span>: <span style=color:#f1fa8c>&#34;^10.0.0&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#ff79c6>&#34;wait-port&#34;</span>: <span style=color:#f1fa8c>&#34;^1.0.4&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Great! Now we have a use case, so let&rsquo;s document it.</p><h4 id=documentation-1>Documentation
+<a class=heading-link href=#documentation-1><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h4><p>Now that we have a use case, it&rsquo;s important to make it easy to adopt by providing a README that explains how to use it. For this, we&rsquo;ll use <a href=https://terraform-docs.io/user-guide/introduction/ class=external-link target=_blank rel=noopener>terraform-docs</a>. After installing it, we&rsquo;ll set up the following:</p><p>First, create the <code>examples/.terraform-docs.yml</code> file, which will serve as the base structure for all the examples:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span>formatter: &#34;markdown table&#34;
+</span></span><span style=display:flex><span>header-from: header.md # Specifies the source for the README header content
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>content: |-
+</span></span><span style=display:flex><span>  {{ .Header }}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  ```hcl
+</span></span><span style=display:flex><span>  {{ include &#34;main.tf&#34; }}
+</span></span><span style=display:flex><span>  ```
+</span></span></code></pre></div><p>Next, create the <code>examples/gcp/cloud-function-v2/header.md</code> file to define a header specific to our example. For this case, the content might be:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-markdown data-lang=markdown><span style=display:flex><span><span style=font-weight:700>## Creating a Cloud Function
+</span></span></span><span style=display:flex><span><span style=font-weight:700></span>
+</span></span><span style=display:flex><span>This example demonstrates how to create a Cloud Function in GCP using Terraform. The example will zip the code inside the <span style=color:#f1fa8c>`src/`</span> folder and store it in a GCS bucket.
+</span></span></code></pre></div><p>Finally, run the following command to generate your README:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ <span style=color:#8be9fd;font-style:italic>cd</span> examples/gcp/cloud-function-v2
+</span></span><span style=display:flex><span>❯ terraform-docs -c ../../.terraform-docs.yml .
+</span></span></code></pre></div><p>With this we have a documented use case and provide a process to regenerate it based on your code. To automate this process, simply add it to your CI pipeline.</p><h2 id=next-steps>Next steps
+<a class=heading-link href=#next-steps><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>In the next part of the series, we’ll write a unit test based on our example.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+2019 -
+2024
+Nivaldo Melo
+·
+Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/ target=_blank rel=noopener>Coder</a>.</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script></body></html>
