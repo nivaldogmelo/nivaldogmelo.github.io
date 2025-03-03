@@ -1,3 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on nivaldogmelo</title><link>https://nivaldogmelo.github.io/pt-br/posts/</link><description>Recent content in Posts on nivaldogmelo</description><generator>Hugo -- gohugo.io</generator><language>pt-br</language><lastBuildDate>Tue, 13 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nivaldogmelo.github.io/pt-br/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Estruturando um projeto Terraform pt1</title><link>https://nivaldogmelo.github.io/pt-br/posts/structuring-terraform-pt1/</link><pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/pt-br/posts/structuring-terraform-pt1/</guid><description>Estruturando projetos Terraform Pt.1 Link para o cabeçalho Como sabemos o Terraform é uma das ferramentas mais populares quando se trata de Infraestrutura como código (IAC) declarativa. Porém algo que sempre me deixou um pouco perdido foi como estruturar meus projetos de maneira eficiente. Não é difícil achar um tutorial de boas práticas de como devemos nomear recursos, porém saber como organizar suas pastas pode ser um pouco mais desafiador.</description></item><item><title>Construindo um Port Scanner com Golang</title><link>https://nivaldogmelo.github.io/pt-br/posts/go-port-scanner/</link><pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/pt-br/posts/go-port-scanner/</guid><description>Construindo um Port Scanner com Golang Link para o cabeçalho Esses dias eu quis fazer um projetinho com go, então visitei a programming challenges e busquei por algo, o port scanner chamou minha atenção então decidir pegar ele.
-Disclaimer Link para o cabeçalho O que vamos montar aqui não pode ser usado em servidores nos quais você não possui permissão para executar. Leia essa página para entender melhor
-Versão Inicial Link para o cabeçalho Então primeiro vamos definir uma versão chamada PortScan que irá receber um parâmetro servidor o qual será o servidor que iremos escanear e retornar uma lista com as portas disponíveis no mesmo.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on nivaldogmelo</title><link>https://nivaldogmelo.github.io/pt-br/posts/</link><description>Recent content in Posts on nivaldogmelo</description><generator>Hugo -- gohugo.io</generator><language>pt-br</language><lastBuildDate>Tue, 13 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nivaldogmelo.github.io/pt-br/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Estruturando um projeto Terraform pt1</title><link>https://nivaldogmelo.github.io/pt-br/posts/structuring-terraform-pt1/</link><pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/pt-br/posts/structuring-terraform-pt1/</guid><description>&lt;h2 id="estruturando-projetos-terraform-pt1">
+Estruturando projetos Terraform Pt.1
+&lt;a class="heading-link" href="#estruturando-projetos-terraform-pt1">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link para o cabeçalho">&lt;/i>
+&lt;span class="sr-only">Link para o cabeçalho&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>Como sabemos o Terraform é uma das ferramentas mais populares quando se trata de Infraestrutura como código (IAC) declarativa. Porém algo que sempre me deixou um pouco perdido foi como estruturar meus projetos de maneira eficiente. Não é difícil achar um tutorial de boas práticas de como devemos nomear recursos, porém saber como organizar suas pastas pode ser um pouco mais desafiador. Devo usar módulos? Workspaces? Até onde devo agregar os recursos em um único arquivo &lt;code>.tf&lt;/code>?&lt;/p></description></item><item><title>Construindo um Port Scanner com Golang</title><link>https://nivaldogmelo.github.io/pt-br/posts/go-port-scanner/</link><pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/pt-br/posts/go-port-scanner/</guid><description>&lt;h2 id="construindo-um-port-scanner-com-golang">
+Construindo um Port Scanner com Golang
+&lt;a class="heading-link" href="#construindo-um-port-scanner-com-golang">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link para o cabeçalho">&lt;/i>
+&lt;span class="sr-only">Link para o cabeçalho&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>Esses dias eu quis fazer um projetinho com go, então visitei a &lt;a href="https://github.com/thinkbreak/programming-challenges" class="external-link" target="_blank" rel="noopener">programming challenges&lt;/a> e busquei por algo, o port scanner chamou minha atenção então decidir pegar ele.&lt;/p>
+&lt;hr>
+&lt;h2 id="disclaimer">
+Disclaimer
+&lt;a class="heading-link" href="#disclaimer">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link para o cabeçalho">&lt;/i>
+&lt;span class="sr-only">Link para o cabeçalho&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>O que vamos montar aqui não pode ser usado em servidores nos quais você não possui permissão para executar. Leia &lt;a href="https://nmap.org/book/legal-issues.html" title="nmap legal issues" class="external-link" target="_blank" rel="noopener">essa&lt;/a> página para entender melhor&lt;/p></description></item></channel></rss>

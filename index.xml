@@ -1,2 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nivaldogmelo</title><link>https://nivaldogmelo.github.io/</link><description>Recent content on nivaldogmelo</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 13 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nivaldogmelo.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Structuring a Terraform project pt1</title><link>https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/</link><pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/</guid><description>Structuring a Terraform project Pt.1 Link to heading As we know, Terraform is one of the most popular tools when we talk about declarative Infrastructure as Code (IAC). However, one aspect that often feels a bit unclear for me is how to structure projects effectively. While it&amp;rsquo;s easy to find tutorials on best practices for naming resources, figuring out the right folder structure can be more challenging. Should you use modules?</description></item><item><title>Building a Simple Port Scanner with GO</title><link>https://nivaldogmelo.github.io/posts/go-port-scanner/</link><pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/posts/go-port-scanner/</guid><description>Building a Simple Port-Scanner with Go Link to heading These days I wanted to make a new project with go, so I went to the programming challenges page and searched for something, the port scanner caught my attention, so I decided to went for it.
-Disclaimer Link to heading What we&amp;rsquo;re gonna use build can&amp;rsquo;t be used against servers which you don&amp;rsquo;t have a permission to run. Read this to understand more</description></item><item><title/><link>https://nivaldogmelo.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/about/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nivaldogmelo</title><link>https://nivaldogmelo.github.io/</link><description>Recent content on nivaldogmelo</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 13 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://nivaldogmelo.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Structuring a Terraform project pt1</title><link>https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/</link><pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/posts/structuring-terraform-pt1/</guid><description>&lt;h2 id="structuring-a-terraform-project-pt1">
+Structuring a Terraform project Pt.1
+&lt;a class="heading-link" href="#structuring-a-terraform-project-pt1">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link to heading">&lt;/i>
+&lt;span class="sr-only">Link to heading&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>As we know, Terraform is one of the most popular tools when we talk about declarative Infrastructure as Code (IAC). However, one aspect that often feels a bit unclear for me is how to structure projects effectively. While it&amp;rsquo;s easy to find tutorials on best practices for naming resources, figuring out the right folder structure can be more challenging. Should you use modules? Workspaces? How much should you aggregate resources into a single .tf file?&lt;/p></description></item><item><title>Building a Simple Port Scanner with GO</title><link>https://nivaldogmelo.github.io/posts/go-port-scanner/</link><pubDate>Sun, 25 Oct 2020 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/posts/go-port-scanner/</guid><description>&lt;h2 id="building-a-simple-port-scanner-with-go">
+Building a Simple Port-Scanner with Go
+&lt;a class="heading-link" href="#building-a-simple-port-scanner-with-go">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link to heading">&lt;/i>
+&lt;span class="sr-only">Link to heading&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>These days I wanted to make a new project with go, so I went to the &lt;a href="https://github.com/thinkbreak/programming-challenges" class="external-link" target="_blank" rel="noopener">programming challenges&lt;/a> page and searched for something, the port scanner caught my attention, so I decided to went for it.&lt;/p>
+&lt;hr>
+&lt;h2 id="disclaimer">
+Disclaimer
+&lt;a class="heading-link" href="#disclaimer">
+&lt;i class="fa-solid fa-link" aria-hidden="true" title="Link to heading">&lt;/i>
+&lt;span class="sr-only">Link to heading&lt;/span>
+&lt;/a>
+&lt;/h2>
+&lt;p>What we&amp;rsquo;re gonna use build can&amp;rsquo;t be used against servers which you don&amp;rsquo;t have a permission to run. Read &lt;a href="https://nmap.org/book/legal-issues.html" title="nmap legal issues" class="external-link" target="_blank" rel="noopener">this&lt;/a> to understand more&lt;/p></description></item><item><title/><link>https://nivaldogmelo.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://nivaldogmelo.github.io/about/</guid><description/></item></channel></rss>
