@@ -4,13 +4,12 @@ theme = "hugo-coder"
 languageCode = "en"
 defaultcontentlanguage = "en"
 
-paginate = 20
-
-
+[pagination]
+pagerSize = 20
 
 [params]
   author = "Nivaldo Melo"
-  info = "SRE, Golang dev and big fan of sitcoms"
+  info = "SRE, Golang dev and big fan of sitcoms <br> <a href=https://derelict.garden/prev/nivaldogmelo.github.io>â†</a><a href=https://derelict.garden>derelict garden webring</a><a href=https://derelict.garden/next/nivaldogmelo.github.io>â†’</a>"
   description = "Nivaldo's personal website"
   keywords = "blog,developer,personal"
   avatarurl = "images/avatar.jpg"
@@ -42,27 +41,33 @@ author = "authors"
 # Social links
 [[params.social]]
   name = "Github"
-  icon = "fa fa-github fa-2x"
+  icon = "fa-brands fa-github fa-2x"
   weight = 1
   url = "https://github.com/nivaldogmelo/"
 
 [[params.social]]
 name = "LinkedIn"
-icon = "fa fa-2x fa-linkedin"
+icon = "fa-brands fa-2x fa-linkedin"
 weight = 2
 url = "https://www.linkedin.com/in/nivaldogmelo/"
 
 [[params.social]]
 name = "Medium"
-icon = "fa fa-2x fa-medium"
+icon = "fa-brands fa-2x fa-medium"
 weight = 3
 url = "https://medium.com/@nivaldogmelo"
 
 [[params.social]]
 name = "RSS"
-icon = "fa fa-rss-square fa-2x"
+icon = "fa-solid fa-rss-square fa-2x"
 weight = 4
 url = "/posts/index.xml"
+
+[[params.social]]
+name = "Derelict Garden"
+icon = "fa-solid fa-blog fa-2x"
+weight = 4
+url = "https://derelict.garden/rand"
 
 [languages.en]
 languageName = ":uk:"
