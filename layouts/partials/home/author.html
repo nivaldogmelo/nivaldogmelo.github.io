@@ -1,0 +1,13 @@
+{{ if eq .Site.Language.Lang "pt-br" }}
+<h1>Olá, seja bem-vindo!</h1>
+<h2>Me chamo {{ .Site.Params.author }}</h2>
+{{ else }}
+<h1>Hi, nice to meet you!</h1>
+<h2>I'm {{ .Site.Params.author }}</h2>
+{{ end }}
+
+{{ if reflect.IsSlice .Site.Params.info }}
+<h2>{{ range .Site.Params.info }}{{ . | markdownify }}<br>{{ end}}</h2>
+{{ else }}
+<h2>{{ .Site.Params.info | markdownify }} </h2>
+{{ end }}
